@@ -68,14 +68,16 @@ class Card(BaseModel):
     original_deck = models.ForeignKey(
         OriginalDeck, on_delete=models.CASCADE, null=True, blank=True
     )
-    rarity = models.ForeignKey(Rarity, on_delete=models.CASCADE, default=1)
+    rarity = models.ForeignKey(
+        Rarity, on_delete=models.CASCADE, default=1, null=True
+    )
 
     def __str__(self):
         return self.name
 
 
 class FileCards(BaseModel):
-    file = models.FileField(upload_to="cards/")
+    file = models.FileField(upload_to="uploads/file_cards/")
     num_registers = models.IntegerField(null=True)
     num_ok = models.IntegerField(null=True)
     num_error = models.IntegerField(null=True)

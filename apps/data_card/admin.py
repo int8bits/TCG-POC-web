@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Card,
+    CardProffer,
     Element,
     FileCards,
     Generation,
@@ -32,3 +33,4 @@ admin.site.register(Generation)
 admin.site.register(Kind)
 admin.site.register(OriginalDeck)
 admin.site.register(Rarity)
+admin.site.register(CardProffer)

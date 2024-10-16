@@ -1,6 +1,7 @@
 
 from django.urls import path
 
+from .router import router
 from .views import (
     CardsListView,
     CardDetailView,
@@ -16,4 +17,4 @@ urlpatterns = [
     path(
         "<pk>/success", CardProfferView.as_view(), name="card_success_proffer"
     ),
-]
+] + router.urls

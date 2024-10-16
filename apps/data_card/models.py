@@ -57,8 +57,8 @@ class Card(BaseModel):
     quick_active = models.TextField(blank=True)
     cost = models.TextField(blank=True)
     description = models.TextField(blank=True)
-    attack = models.IntegerField(null=True)
-    rest = models.IntegerField(null=True)
+    attack = models.IntegerField(null=True, blank=True)
+    rest = models.IntegerField(null=True, blank=True)
     banned = models.BooleanField(default=False)
     image = models.ImageField(
         upload_to="uploads/cards/", null=True, blank=True
@@ -180,4 +180,4 @@ class CardProffer(models.Model):
     rarity = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)

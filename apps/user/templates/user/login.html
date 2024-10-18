@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Acceso{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class = "row">
+        <div class="col-md-6 offset-md-3">
+            <h1>Acceso</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form | crispy }}
+
+                <input class="btn btn-primary" type="submit" value="Acceso" />
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

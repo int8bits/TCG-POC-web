@@ -3,48 +3,13 @@ from rest_framework import serializers
 
 from .models import (
     Card,
-    Element,
-    Generation,
-    Kind,
-    Rarity,
-    OriginalDeck,
 )
 
 
-class ElementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Element
-        fields = ["name"]
-
-
-class GenerationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Generation
-        fields = ["name"]
-
-
-class KindSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Kind
-        fields = ["name"]
-
-
-class RaritySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rarity
-        fields = ["name"]
-
-
-class OriginalDeckSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OriginalDeck
-        fields = ["name"]
-
-
 class CardListSerializer(serializers.ModelSerializer):
-    kind = KindSerializer()
-    generation = GenerationSerializer()
-    element = ElementSerializer()
+    kind = serializers.CharField(source="kind.name", default=None)
+    generation = serializers.CharField(source="generation.name", default=None)
+    element = serializers.CharField(source="element.name", default=None)
 
     class Meta:
         model = Card
@@ -61,11 +26,14 @@ class CardListSerializer(serializers.ModelSerializer):
 
 
 class CardDetailSerializer(serializers.ModelSerializer):
-    element = ElementSerializer()
-    generation = GenerationSerializer()
-    kind = KindSerializer()
-    rarity = RaritySerializer()
-    original_deck = OriginalDeckSerializer()
+    element = serializers.CharField(source="element.name", default=None)
+    generation = serializers.CharField(source="generation.name", default=None)
+    kind = serializers.CharField(source="kind.name", default=None)
+    rarity = serializers.CharField(source="rarity.name", default=None)
+    original_deck = serializers.CharField(
+        source="original_deck.name",
+        default=None
+    )
 
     class Meta:
         model = Card

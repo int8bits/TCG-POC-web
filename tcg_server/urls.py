@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('apps.main.urls')),
     path('admin/', admin.site.urls),
     path('data_card/', include('apps.data_card.urls')),
+    path('auth/', include('apps.user.urls')),
+    path('deck_creator/', include('apps.deck_creator.urls')),
 ]

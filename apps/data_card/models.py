@@ -136,7 +136,6 @@ class FileCards(BaseModel):
                 )
                 num_ok += 1
             except Exception as e:
-                print(e)
                 num_error += 1
                 id_errors.append(row[0])
 

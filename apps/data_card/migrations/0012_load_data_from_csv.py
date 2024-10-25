@@ -29,7 +29,7 @@ def load_initial_data(apps, schema_editor):
             rest = None if row[9] == "" or row[9] == "Null" else row[9]
 
             Card.objects.create(
-                id=row[0],
+                id_k=row[0],
                 name=row[1],
                 passive=row[2],
                 quick_passive=row[3],

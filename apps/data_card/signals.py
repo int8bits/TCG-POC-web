@@ -32,7 +32,7 @@ def save_real_card(sender, instance, **kwargs):
         if instance.rarity is not None:
             rarity = Rarity.objects.get(id=instance.rarity)
 
-        card = Card.objects.get(id=instance.id_k)
+        card = Card.objects.get(id_k=instance.id_k)
 
         card.name=instance.name
         card.passive=instance.passive

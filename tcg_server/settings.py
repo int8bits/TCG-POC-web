@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_extensions',
     'rest_framework',
     'apps.blog',
     'apps.data_card',
@@ -148,3 +149,13 @@ LOGOUT_REDIRECT_URL = '/'
 # Another confs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+GRAPH_MODELS = {
+    'app_labels': [
+        'apps.blog',
+        'apps.data_card',
+        'apps.deck_creator',
+        'apps.main',
+        'apps.market',
+        'apps.user',
+    ],
+}

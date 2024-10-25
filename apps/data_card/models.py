@@ -49,7 +49,7 @@ class OriginalDeck(BaseModel):
 
 
 class Card(BaseModel):
-    id = models.CharField(max_length=16, primary_key=True)
+    id_k = models.CharField(max_length=16, unique=True)
     name = models.CharField(max_length=64)
     passive = models.TextField(blank=True)
     active = models.TextField(blank=True)
@@ -118,7 +118,7 @@ class FileCards(BaseModel):
                 rest = None if row[9] == "" or row[9] == "Null" else row[9]
 
                 Card.objects.create(
-                    id=row[0],
+                    id_k=row[0],
                     name=row[1],
                     passive=row[2],
                     quick_passive=row[3],

@@ -50,7 +50,7 @@ def load_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('data_card', '0011_alter_card_attack_alter_card_rest'),
+        ('data_card', '0001_initial'),
     ]
 
     operations = [

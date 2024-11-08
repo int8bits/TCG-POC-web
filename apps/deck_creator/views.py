@@ -1,5 +1,6 @@
 
 from django.apps import apps
+from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView, DetailView
 from django.shortcuts import redirect
@@ -19,18 +20,22 @@ class MainView(View):
         cards_found = []
         name = request.POST.get('deckName')
         description = request.POST.get('deckDescription')
-        card_list = request.POST.getlist('deckCards')
+        card_list = request.POST.get('deckCards')
+        card_list = [
+            card.strip() for card in card_list.split(',') if card.strip()
+        ]
 
-        print(name)
-        print(description)
         print(card_list)
 
         for card_ in card_list:
+            print(card_)
             try:
-                card = Card.objects.get(pk=card_)
+                card = Card.objects.get(id_k=card_)
                 cards_found.append(card)
+                print("Found")
             except Card.DoesNotExist:
                 not_founds.append(card_)
+                print("Not found")
 
         deck = Deck.objects.create(
             name_deck=name,
@@ -41,9 +46,10 @@ class MainView(View):
 
         deck.cards.add(*cards_found)
 
-        return redirect('resume_deck')
+        return redirect(reverse('resume_deck', args=[deck.pk]))
 
 
 class ResumeDeckView(DetailView):
     template_name = 'deck_creator/resume_deck.html'
     model = Deck
+    context_object_name = 'deck'

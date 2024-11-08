@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Deck Creator{% endblock %}
+
+{% load filters %}
+{% block content %}
+<h1>{{ deck.name_deck }}</h1>
+
+<p>{{ deck.description }}</p>
+
+<h2>Cartas</h2>
+
+<ul>
+    {% for card in deck.cards.all %}
+    <li>{{ card.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Cartas no encontradas</h2>
+<ul>
+    {% for card in deck.cards_not_found|split_list %}
+    <li>{{ card }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

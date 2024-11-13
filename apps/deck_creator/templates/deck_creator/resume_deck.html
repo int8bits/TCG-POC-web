@@ -5,6 +5,7 @@
 {% block title %}Deck Creator{% endblock %}
 
 {% load filters %}
+
 {% block content %}
 <h1>{{ deck.name_deck }}</h1>
 
@@ -13,8 +14,32 @@
 <h2>Cartas</h2>
 
 <ul>
+    <h3>Adendei</h3>
     {% for card in deck.cards.all %}
-    <li>{{ card.name }}</li>
+        {% if "Adendei" in card.kind.name %}
+        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
+        {% endif %}
+    {% endfor %}
+
+    <h3>Rot e Ixim</h3>
+    {% for card in deck.cards.all %}
+        {% if card.kind.name == "Rot" or card.kind.name == "Ixim" %}
+        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
+        {% endif %}
+    {% endfor %}
+
+    <h3>Protector</h3>
+    {% for card in deck.cards.all %}
+        {% if card.kind.name == "Protector" %}
+        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
+        {% endif %}
+    {% endfor %}
+
+    <h3>Bio</h3>
+    {% for card in deck.cards.all %}
+        {% if card.kind.name == "Bio" %}
+        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
+        {% endif %}
     {% endfor %}
 </ul>
 

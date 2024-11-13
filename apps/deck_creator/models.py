@@ -8,6 +8,16 @@ class Deck(models.Model):
     user = models.ForeignKey(
         'user.ExtendedUser', on_delete=models.CASCADE, null=True, blank=True
     )
-    cards_not_found = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class CardNotFound(models.Model):
+    id_k = models.CharField(max_length=16, unique=True)
+    proffer = models.ForeignKey(
+        'data_card.CardProffer',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    own_deck = models.ForeignKey(Deck, on_delete=models.CASCADE)

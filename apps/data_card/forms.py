@@ -2,6 +2,7 @@
 import csv
 
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import Card, Element, FileCards, Generation, Kind, OriginalDeck
 
@@ -54,3 +55,50 @@ class FileCardsForm(forms.ModelForm):
         FileCards.objects.create(
             file=self.cleaned_data['file'],
         )
+
+
+class CardProfferForm(forms.ModelForm):
+    class Meta:
+        model = Card
+        fields = [
+            'id_k',
+            'name',
+            'passive',
+            'quick_passive',
+            'active',
+            'quick_active',
+            'cost',
+            'attack',
+            'rest',
+            'description',
+            'kind',
+            'generation',
+            'element',
+            'original_deck',
+            'rarity',
+        ]
+        labels = {
+            'id_k': _('id_k'),
+            'name': _('Nombre'),
+            'passive': _('Pasiva'),
+            'quick_passive': _('Pasiva Rápida'),
+            'active': _('Activa'),
+            'quick_active': _('Activa Rápida'),
+            'cost': _('Costo'),
+            'attack': _('Ataque'),
+            'rest': _('Descanso'),
+            'description': _('Descripción'),
+            'kind': _('Tipo'),
+            'generation': _('Generación'),
+            'element': _('Elemento'),
+            'original_deck': _('Mazo Original'),
+            'rarity': _('Rareza'),
+        }
+        widgets = {
+            'passive': forms.Textarea(attrs={'rows': 2}),
+            'quick_passive': forms.Textarea(attrs={'rows': 2}),
+            'active': forms.Textarea(attrs={'rows': 2}),
+            'quick_active': forms.Textarea(attrs={'rows': 2}),
+            'cost': forms.Textarea(attrs={'rows': 2}),
+            'description': forms.Textarea(attrs={'rows': 2}),
+        }

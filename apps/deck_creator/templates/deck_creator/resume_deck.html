@@ -2,51 +2,167 @@
 
 {% load static %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Deck Creator{% endblock %}
 
 {% load filters %}
 
 {% block content %}
-<h1>{{ deck.name_deck }}</h1>
+<div class="container text-center">
+  <h1>{{ deck.name_deck }}</h1>
 
-<p>{{ deck.description }}</p>
+  <p>{{ deck.description }}</p>
 
-<h2>Cartas</h2>
+  <h2>Cartas</h2>
 
-<ul>
-    <h3>Adendei</h3>
-    {% for card in deck.cards.all %}
-        {% if "Adendei" in card.kind.name %}
-        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
-        {% endif %}
-    {% endfor %}
+  <h3>Adendei</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in adendei %}
+      <tr>
+        <td>{{ card.id_k }}</td>
+        <td>{{ card.name }}</td>
+        <td>{{ card.kind }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    <h3>Rot e Ixim</h3>
-    {% for card in deck.cards.all %}
-        {% if card.kind.name == "Rot" or card.kind.name == "Ixim" %}
-        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
-        {% endif %}
-    {% endfor %}
+  <h3>Rot</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in rots %}
+      <tr>
+        <td>{{ card.id_k }}</td>
+        <td>{{ card.name }}</td>
+        <td>{{ card.kind }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    <h3>Protector</h3>
-    {% for card in deck.cards.all %}
-        {% if card.kind.name == "Protector" %}
-        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
-        {% endif %}
-    {% endfor %}
+  <h3>Ixim</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in ixims %}
+      <tr>
+        <td>{{ card.id_k }}</td>
+        <td>{{ card.name }}</td>
+        <td>{{ card.kind }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    <h3>Bio</h3>
-    {% for card in deck.cards.all %}
-        {% if card.kind.name == "Bio" %}
-        <li>{{ card.id_k }} -- {{ card.name }} -- {{ card.kind }}</li>
-        {% endif %}
-    {% endfor %}
-</ul>
+  <h3>Protector</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in protectors %}
+      <tr>
+        <td>{{ card.id_k }}</td>
+        <td>{{ card.name }}</td>
+        <td>{{ card.kind }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-<h2>Cartas no encontradas</h2>
-<ul>
-    {% for card in deck.cards_not_found|split_list %}
-    <li>{{ card }}</li>
-    {% endfor %}
-</ul>
+  <h3>Bio</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in bio %}
+      <tr>
+        <td>{{ card.id_k }}</td>
+        <td>{{ card.name }}</td>
+        <td>{{ card.kind }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Cartas no encontradas</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Agregar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for card in not_found %}
+        <tr>
+          <td>{{ card }}</td>
+          <td>
+            {% if card.proffer is None %}
+            <button id="{{ card.id_k }}" class="btn btn-primary proffer-card" data-bs-toggle="modal" data-bs-target="#registerModal">Agregar</button>
+            {% else %}
+            Agregada / en espera de aprobar
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% csrf_token %}
+        {{ form_card_proffer|crispy }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'deck_creator/js/deck_resume.js' %}"></script>
 {% endblock %}

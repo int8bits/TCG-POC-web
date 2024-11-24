@@ -10,6 +10,7 @@ class Deck(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    valide_deck = models.BooleanField(default=False)
 
 
 class CardNotFound(models.Model):
@@ -18,6 +19,13 @@ class CardNotFound(models.Model):
         'data_card.CardProffer',
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
     )
-    own_deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
+    own_deck = models.ForeignKey(
+        Deck,
+        on_delete=models.CASCADE,
+        related_name='not_founds',
+    )
+
+    def __str__(self):
+        return self.id_k

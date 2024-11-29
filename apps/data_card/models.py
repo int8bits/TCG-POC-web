@@ -172,11 +172,17 @@ class CardProffer(models.Model):
     approved = models.BooleanField(default=False)
 
     # Foreign keys
-    kind = models.IntegerField(null=True, blank=True)
-    generation = models.IntegerField(null=True, blank=True)
-    element = models.IntegerField(null=True, blank=True)
-    original_deck = models.IntegerField(null=True, blank=True)
-    rarity = models.IntegerField(null=True, blank=True)
+    kind = models.ForeignKey(Kind, on_delete=models.CASCADE)
+    generation = models.ForeignKey(Generation, on_delete=models.CASCADE)
+    element = models.ForeignKey(
+        Element, on_delete=models.CASCADE, null=True, blank=True
+    )
+    original_deck = models.ForeignKey(
+        OriginalDeck, on_delete=models.CASCADE, null=True, blank=True
+    )
+    rarity = models.ForeignKey(
+        Rarity, on_delete=models.CASCADE, default=1, null=True, blank=True
+    )
 
     def __str__(self):
         return str(self.id)

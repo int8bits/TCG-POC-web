@@ -10,4 +10,9 @@ $(document).ready(function() {
         $("#id_id_k").prop("readonly", true);
         $("#id_id_k").val(card_id);
     });
+
+    $("#submitRegister").click(function() {
+        console.log("submit!");
+        $("#deckForm").submit();
+    });
 });

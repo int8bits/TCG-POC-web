@@ -14,7 +14,7 @@ from .models import (
 
 @receiver(post_save, sender=CardProffer)
 def save_real_card(sender, instance, **kwargs):
-    if sender.approved:
+    if sender.approved == True:
         kind = None
         generation = None
         element = None

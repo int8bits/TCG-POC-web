@@ -4,7 +4,9 @@ import csv
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import Card, Element, FileCards, Generation, Kind, OriginalDeck
+from .models import (
+    Card, Element, FileCards, Generation, Kind, OriginalDeck, CardProffer
+)
 
 
 class FileCardsForm(forms.ModelForm):
@@ -59,7 +61,7 @@ class FileCardsForm(forms.ModelForm):
 
 class CardProfferForm(forms.ModelForm):
     class Meta:
-        model = Card
+        model = CardProffer
         fields = [
             'id_k',
             'name',

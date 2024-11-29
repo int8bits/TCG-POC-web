@@ -94,8 +94,25 @@ class ResumeDeckView(View):
         )(request)
 
     def post(self, request, pk):
-        deck = self.model.objects.get(pk=pk)
+        forms_module = importlib.import_module('apps.data_card.forms')
+        form_card_proffer = getattr(forms_module, 'CardProfferForm')
+
         form = request.POST
-        print(form)
+        deck = self.model.objects.get(pk=pk)
+        # print(form)
+        form = form_card_proffer(form)
+
+        if form.is_valid():
+            proffer = form.save()
+
+            proffer.save()
+            card_not_found = CardNotFound.objects.get(
+                id_k=form.cleaned_data['id_k'],
+                own_deck=deck,
+            )
+            card_not_found.proffer = proffer
+            card_not_found.save()
+
+        print(form.errors)
 
         return redirect(reverse('resume_deck', args=[deck.pk]))

@@ -21,6 +21,7 @@ pygraphviz = "*"
 django-extensions = "*"
 
 [dev-packages]
+pgcli = "*"
 
 [requires]
 python_version = "3.12"

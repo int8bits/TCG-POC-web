@@ -1,33 +1,57 @@
-<h1>Cards</h1>
-<ul>
-{% for card in card_list %}
-    <li>
-        {{ card.id }} - {{ card.name }} --
-        <a href="{% url 'card_detail' pk=card.id %}">Detalle</a>
-        <a href="{% url 'card_update' pk=card.id %}">Proponer cambio</a>
-        {% if user.is_superuser %}
-        <a href="#">Borrar</a>
-        {% endif %}
-    </li>
-{% empty %}
-    <li>No hay Cartas aún.</li>
-{% endfor %}
-</ul>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; primera</a>
-            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
-        {% endif %}
+{% extends 'base.html' %}
 
-        <span class="current">
-            Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-        </span>
+{% load static %}
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
-        {% endif %}
-    </span>
+{% block title %}Lista de cartas{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Cartas</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </tbody>
+      {% for card in card_list %}
+        <tr>
+          <td>{{ card.id_k }}</td>
+          <td>{{ card.name }}</td>
+          <td>{{ card.kind }}</td>
+          <td>
+            <button type="button" class="btn btn-info" id="{{ card.id_k }}">Detalle</button>
+            <button type="button" class="btn btn-warning" id="{{ card.id_k }}">Proponer cambio</button>
+            {% if user.is_superuser %}
+            <button type="button" class="btn btn-danger" id="{{ card.id_k }}">Borrar</button>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <li>No hay Cartas aún.</li>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; primera</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">anterior</a></li>
+      {% endif %}
+
+      <li class="page-item">
+        <a class="page-link">Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.</a>
+      </li>
+
+      {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">siguiente</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 </div>
+{% endblock %}
